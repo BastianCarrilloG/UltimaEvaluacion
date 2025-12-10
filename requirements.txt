@@ -1,0 +1,9 @@
+# Django y Django REST Framework
+Django==5.0.1
+djangorestframework==3.14.0
+
+# Conector MySQL
+mysqlclient==2.2.1
+
+# CORS (opcional, útil para frontend)
+django-cors-headers==4.3.1

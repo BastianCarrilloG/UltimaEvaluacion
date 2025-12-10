@@ -1,0 +1,50 @@
+# Entorno Virtual
+venv/
+env/
+ENV/
+.venv/
+
+# Python
+*.py[cod]
+*$py.class
+__pycache__/
+*.so
+.Python
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# Migraciones (opcional - comentar si quieres subirlas)
+# */migrations/*.py
+# !*/migrations/__init__.py
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Sistema Operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Variables de entorno
+.env
+.env.local
+
+# Archivos de prueba
+*.coverage
+htmlcov/
+.pytest_cache/
+
+# Distribución
+build/
+dist/
+*.egg-info/
