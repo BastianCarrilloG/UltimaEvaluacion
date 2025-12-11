@@ -4,7 +4,7 @@ API desarrollada con Django REST Framework para gestionar empresas clientes, equ
 
 ---
 
-## �️ Stack Tecnológico
+## 🛠️ Stack Tecnológico
 
 - **Python 3.10+**
 - **Django 5.0.1**
@@ -14,7 +14,7 @@ API desarrollada con Django REST Framework para gestionar empresas clientes, equ
 
 ---
 
-## � Instalación
+## 📦 Instalación
 
 ### 1. Clonar repositorio
 ```bash
@@ -91,12 +91,25 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
-### 4. Ejecutar servidor
+### 4. Crear superusuario (IMPORTANTE)
+
+**Si importaste el dump SQL, ya tienes usuarios creados. Si no, crea uno:**
+
+```bash
+python manage.py createsuperuser
+```
+
+Te pedirá:
+- Username
+- Email (opcional)
+- Password
+
+### 5. Ejecutar servidor
 ```bash
 python manage.py runserver
 ```
 
-**API disponible en:** `http://127.0.0.1:8000/`
+**API disponible en:** `http://127.0.0.1:8000/api/`
 
 ---
 
@@ -139,6 +152,7 @@ UltimaEvaluacion/
 - **Estado de la API:** `GET /api/estado/`
 - **Autenticación:** `POST /api/auth/login/`
 - **Panel Admin:** `http://127.0.0.1:8000/admin/`
+- **API Root:** `http://127.0.0.1:8000/api/`
 
 ### Filtros disponibles
 
@@ -152,29 +166,85 @@ GET /api/ordenes-trabajo/?estado=pendiente&tecnico=1
 
 ## 🔐 Autenticación
 
-**Obtener token:**
+### Obtener token (vía API)
+
 ```http
 POST /api/auth/login/
 Content-Type: application/json
 
 {
-    "username": "usuario",
-    "password": "contraseña"
+    "username": "tu_usuario",
+    "password": "tu_contraseña"
 }
 ```
 
-**Usar token:**
+**Respuesta:**
+```json
+{
+    "token": "9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b"
+}
+```
+
+### Usar el token
+
 ```http
 Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
 ```
 
-**Permisos:**
+### Permisos
+
 - **No autenticado:** Solo lectura (GET)
-- **Autenticado:** CRUD completo
+- **Autenticado:** CRUD completo (GET, POST, PUT, PATCH, DELETE)
 
 ---
 
-## � Modelos de Datos
+## 🧪 Cómo Probar la API
+
+### Opción 1: API Navegable (Más fácil)
+
+1. Ve a: `http://127.0.0.1:8000/api/empresas/`
+2. Click en **"Log in"** (arriba a la derecha)
+3. Ingresa con tu superusuario
+4. Verás un formulario al final de la página para hacer POST
+5. Llena los campos y click en **"POST"**
+
+### Opción 2: Panel de Administración
+
+1. Ve a: `http://127.0.0.1:8000/admin/`
+2. Ingresa con tu superusuario
+3. Gestiona todas las entidades desde la interfaz visual
+
+### Opción 3: cURL (Línea de comandos)
+
+**Primero obtén tu token:**
+```bash
+curl -X POST http://127.0.0.1:8000/api/auth/login/ \
+  -H "Content-Type: application/json" \
+  -d '{"username": "admin", "password": "tu_password"}'
+```
+
+**Luego usa el token para crear:**
+```bash
+curl -X POST http://127.0.0.1:8000/api/empresas/ \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Token tu_token_aqui" \
+  -d '{
+    "nombre": "Industrias S.A.",
+    "direccion": "Av. Principal 123",
+    "rut": "76.123.456-7"
+  }'
+```
+
+### Opción 4: Postman o Insomnia
+
+1. Descarga [Postman](https://www.postman.com/) o [Insomnia](https://insomnia.rest/)
+2. Crea una petición POST a `http://127.0.0.1:8000/api/empresas/`
+3. En Headers agrega: `Authorization: Token tu_token`
+4. En Body (JSON) agrega los datos
+
+---
+
+## 📊 Modelos de Datos
 
 ### Empresa
 - `nombre` (CharField)
